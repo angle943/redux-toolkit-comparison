@@ -1,0 +1,122 @@
+.App__counter {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  margin-left: 64px;
+  font-size: 18px;
+}
+
+.App__header {
+  align-items: center;
+  background: rgb(118, 74, 188);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 64px 0;
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: 700;
+}
+
+input {
+  background: rgb(235, 237, 240);
+  border-radius: 32px;
+  border: none;
+  color: rgb(68, 73, 80);
+  cursor: text;
+  font-size: 14.4px;
+  font-weight: 400;
+  line-height: 32px;
+  margin: 0 16px;
+  padding: 0 16px;
+  width: 200px;
+}
+
+input:focus {
+  outline: none;
+}
+
+button {
+  background: rgb(249, 250, 251);
+  border-radius: 6px;
+  color: rgb(28, 30, 33);
+  cursor: pointer;
+  font-size: 17.28px;
+  font-weight: 700;
+  line-height: 25.92px;
+  margin-right: 8px;
+  transition: all 0.1s ease-in;
+}
+
+button:focus {
+  outline: none;
+}
+
+button:hover {
+  background: white;
+  color: rgb(92, 61, 143);
+}
+
+button:active {
+  background: rgb(200, 201, 204);
+  color: rgb(28, 30, 33);
+}
+
+.App__body {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-row-gap: 16px;
+  margin: 32px 78px;
+}
+
+.App__list {
+  list-style-type: none;
+  font-size: 17px;
+  color: rgb(28, 30, 33);
+  line-height: 25.5px;
+  margin-block-start: 0;
+  margin-block-end: 0;
+}
+
+h2 {
+  margin-block-start: 0;
+}
+
+li {
+  cursor: pointer;
+  margin: 6px 0;
+}
+
+li:hover {
+  color: rgb(118, 74, 188);
+}
+
+li.active {
+  font-weight: bold;
+}
+
+.done {
+  text-decoration: line-through;
+}
+
+.list-number {
+  display: inline-block;
+  width: 24px;
+}
+
+.empty-state {
+  color: rgb(200, 201, 204);
+  font-style: italic;
+}
+
+.todo-desc {
+  display: block;
+  font-weight: bold;
+}
+
+.todo-actions {
+  margin-top: 16px;
+}
