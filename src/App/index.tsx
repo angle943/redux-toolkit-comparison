@@ -5,28 +5,33 @@ import React, {
   useRef,
   useState
 } from "react";
-
+import { v1 as uuid } from "uuid";
+import { Todo } from "../type";
 import "./App.css";
 
-const todos = [
+const ID1 = uuid();
+const ID2 = uuid();
+const ID3 = uuid();
+
+const todos: Todo[] = [
   {
-    id: 1,
+    id: ID1,
     desc: "Learn React",
     isComplete: true
   },
   {
-    id: 2,
+    id: ID2,
     desc: "Learn Redux",
     isComplete: true
   },
   {
-    id: 3,
+    id: ID3,
     desc: "Learn Redux-ToolKit",
     isComplete: false
   }
 ];
 
-const selectedTodoId = 2;
+const selectedTodoId = ID2;
 const editedCount = 0;
 
 const App = function() {
