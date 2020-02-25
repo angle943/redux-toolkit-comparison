@@ -9,34 +9,30 @@ import { v1 as uuid } from "uuid";
 import { Todo } from "../type";
 import "./App.css";
 
-const ID1 = uuid();
-const ID2 = uuid();
-const ID3 = uuid();
-
 const todos: Todo[] = [
   {
-    id: ID1,
+    id: uuid(),
     desc: "Learn React",
     isComplete: true
   },
   {
-    id: ID2,
+    id: uuid(),
     desc: "Learn Redux",
     isComplete: true
   },
   {
-    id: ID3,
+    id: uuid(),
     desc: "Learn Redux-ToolKit",
     isComplete: false
   }
 ];
 
-const selectedTodoId = ID2;
+const selectedTodoId = todos[1].id;
 const editedCount = 0;
 
 const App = function() {
-  const [newTodo, setNewTodo] = useState<string>("");
-  const [editTodo, setEditTodo] = useState<string>("");
+  const [newTodoInput, setNewTodoInput] = useState<string>("");
+  const [editTodoInput, setEditTodoInput] = useState<string>("");
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const editInput = useRef<HTMLInputElement>(null);
 
@@ -44,21 +40,23 @@ const App = function() {
     (selectedTodoId && todos.find(todo => todo.id === selectedTodoId)) || null;
 
   const handleNewInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setNewTodo(e.target.value);
+    setNewTodoInput(e.target.value);
   };
 
   const handleEditInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setEditTodo(e.target.value);
+    setEditTodoInput(e.target.value);
   };
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+  const handleCreateNewTodo = (e: FormEvent<HTMLFormElement>): void => {
     e.preventDefault();
   };
+
+  const handleSelectTodo = (todoId: string) => (): void => {};
 
   const handleEdit = (): void => {
     if (!selectedTodo) return;
 
-    setEditTodo(selectedTodo.desc);
+    setEditTodoInput(selectedTodo.desc);
     setIsEditMode(true);
   };
 
@@ -77,6 +75,15 @@ const App = function() {
   ): void => {
     e.preventDefault();
     setIsEditMode(false);
+    setEditTodoInput("");
+  };
+
+  const handleToggle = (): void => {
+    if (!selectedTodoId || !selectedTodo) return;
+  };
+
+  const handleDelete = (): void => {
+    if (!selectedTodoId) return;
   };
 
   return (
@@ -84,12 +91,12 @@ const App = function() {
       <div className="App__counter">Todos Updated Count: {editedCount}</div>
       <div className="App__header">
         <h1>Todo: Redux vs RTK Edition</h1>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleCreateNewTodo}>
           <label htmlFor="new-todo">Add new:</label>
           <input
             onChange={handleNewInputChange}
             id="new-todo"
-            value={newTodo}
+            value={newTodoInput}
           />
           <button type="submit">Create</button>
         </form>
@@ -103,6 +110,7 @@ const App = function() {
                 todo.id === selectedTodoId ? "active" : ""
               }`}
               key={todo.id}
+              onClick={handleSelectTodo(todo.id)}
             >
               <span className="list-number">{i + 1})</span> {todo.desc}
             </li>
@@ -123,8 +131,8 @@ const App = function() {
               </span>
               <div className="todo-actions">
                 <button onClick={handleEdit}>Edit</button>
-                <button>Toggle</button>
-                <button>Delete</button>
+                <button onClick={handleToggle}>Toggle</button>
+                <button onClick={handleDelete}>Delete</button>
               </div>
             </>
           ) : (
@@ -133,7 +141,7 @@ const App = function() {
               <input
                 ref={editInput}
                 onChange={handleEditInputChange}
-                value={editTodo}
+                value={editTodoInput}
               />
               <button type="submit">Update</button>
               <button onClick={handleCancelUpdate}>Cancel</button>
