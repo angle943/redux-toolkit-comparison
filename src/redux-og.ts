@@ -21,18 +21,14 @@ interface ICreateTodo {
   type: typeof CREATE_TODO;
   payload: Todo;
 }
-export const createTodoActionCreator = ({
-  desc,
-}: {
-  desc: string;
-}): ICreateTodo => {
+export const createTodoActionCreator = ({ desc }: { desc: string }): ICreateTodo => {
   return {
     type: CREATE_TODO,
     payload: {
       id: uuid(),
       desc,
-      isComplete: false,
-    },
+      isComplete: false
+    }
   };
 };
 interface IEditTodo {
@@ -42,19 +38,13 @@ interface IEditTodo {
     desc: string;
   };
 }
-export const editTodoActionCreator = ({
-  id,
-  desc,
-}: {
-  id: string;
-  desc: string;
-}): IEditTodo => {
+export const editTodoActionCreator = ({ id, desc }: { id: string; desc: string }): IEditTodo => {
   return {
     type: EDIT_TODO,
     payload: {
       id,
-      desc,
-    },
+      desc
+    }
   };
 };
 interface IToggleTodo {
@@ -64,19 +54,13 @@ interface IToggleTodo {
     isComplete: boolean;
   };
 }
-export const toggleTodoActionCreator = ({
-  id,
-  isComplete,
-}: {
-  id: string;
-  isComplete: boolean;
-}): IToggleTodo => {
+export const toggleTodoActionCreator = ({ id, isComplete }: { id: string; isComplete: boolean }): IToggleTodo => {
   return {
     type: TOGGLE_TODO,
     payload: {
       id,
-      isComplete,
-    },
+      isComplete
+    }
   };
 };
 interface IDeleteTodo {
@@ -85,16 +69,12 @@ interface IDeleteTodo {
     id: string;
   };
 }
-export const deleteTodoActionCreator = ({
-  id,
-}: {
-  id: string;
-}): IDeleteTodo => {
+export const deleteTodoActionCreator = ({ id }: { id: string }): IDeleteTodo => {
   return {
     type: DELETE_TODO,
     payload: {
-      id,
-    },
+      id
+    }
   };
 };
 interface ISelectTodo {
@@ -103,14 +83,10 @@ interface ISelectTodo {
     id: string;
   };
 }
-export const selectTodoActionCreator = ({
-  id,
-}: {
-  id: string;
-}): ISelectTodo => {
+export const selectTodoActionCreator = ({ id }: { id: string }): ISelectTodo => {
   return {
     type: SELECT_TODO,
-    payload: { id },
+    payload: { id }
   };
 };
 
@@ -121,44 +97,35 @@ const todosInitialState: Todo[] = [
   {
     id: uuid(),
     desc: "Learn React",
-    isComplete: true,
+    isComplete: true
   },
   {
     id: uuid(),
     desc: "Learn Redux",
-    isComplete: true,
+    isComplete: true
   },
   {
     id: uuid(),
     desc: "Learn Redux-ToolKit",
-    isComplete: false,
-  },
+    isComplete: false
+  }
 ];
 type TodoActionTypes = ICreateTodo | IEditTodo | IToggleTodo | IDeleteTodo;
-const todosReducer = (
-  state: Todo[] = todosInitialState,
-  action: TodoActionTypes
-) => {
+const todosReducer = (state: Todo[] = todosInitialState, action: TodoActionTypes) => {
   switch (action.type) {
     case CREATE_TODO: {
       return [...state, action.payload];
     }
     case EDIT_TODO: {
-      return state.map((todo) =>
-        todo.id === action.payload.id
-          ? { ...todo, desc: action.payload.desc }
-          : todo
-      );
+      return state.map(todo => (todo.id === action.payload.id ? { ...todo, desc: action.payload.desc } : todo));
     }
     case TOGGLE_TODO: {
-      return state.map((todo) =>
-        todo.id === action.payload.id
-          ? { ...todo, isComplete: action.payload.isComplete }
-          : todo
+      return state.map(todo =>
+        todo.id === action.payload.id ? { ...todo, isComplete: action.payload.isComplete } : todo
       );
     }
     case DELETE_TODO: {
-      return state.filter((todo) => todo.id !== action.payload.id);
+      return state.filter(todo => todo.id !== action.payload.id);
     }
     default: {
       return state;
@@ -167,10 +134,7 @@ const todosReducer = (
 };
 
 type SelectTodoActionTypes = ISelectTodo;
-const selectTodosReducer = (
-  state: string | null = null,
-  action: SelectTodoActionTypes
-) => {
+const selectTodosReducer = (state: string | null = null, action: SelectTodoActionTypes) => {
   switch (action.type) {
     case SELECT_TODO: {
       return action.payload.id;
@@ -204,13 +168,10 @@ const counterReducer = (state: number = 0, action: TodoActionTypes) => {
 const reducers = combineReducers({
   todos: todosReducer,
   selectedTodo: selectTodosReducer,
-  counter: counterReducer,
+  counter: counterReducer
 });
 
 //////////////////////////////////////////////////////////////////////
 // Store
 //////////////////////////////////////////////////////////////////////
-export default createStore(
-  reducers,
-  composeWithDevTools(applyMiddleware(thunk, logger))
-);
+export default createStore(reducers, composeWithDevTools(applyMiddleware(thunk, logger)));

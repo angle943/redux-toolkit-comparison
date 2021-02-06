@@ -1,19 +1,20 @@
-import React, {
-  ChangeEvent,
-  FormEvent,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useRef, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+// import {
+//   createTodoActionCreator,
+//   editTodoActionCreator,
+//   toggleTodoActionCreator,
+//   deleteTodoActionCreator,
+//   selectTodoActionCreator
+// } from "../redux-og";
 import {
   createTodoActionCreator,
   editTodoActionCreator,
   toggleTodoActionCreator,
   deleteTodoActionCreator,
-  selectTodoActionCreator,
-} from "../redux-og";
-import { Todo, State } from "../type";
+  selectTodoActionCreator
+} from "../redux-toolkit";
+import { State } from "../type";
 import "./App.css";
 
 const App = function() {
@@ -26,9 +27,7 @@ const App = function() {
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
   const editInput = useRef<HTMLInputElement>(null);
 
-  const selectedTodo =
-    (selectedTodoId && todos.find((todo) => todo.id === selectedTodoId)) ||
-    null;
+  const selectedTodo = (selectedTodoId && todos.find(todo => todo.id === selectedTodoId)) || null;
 
   const handleNewInputChange = (e: ChangeEvent<HTMLInputElement>): void => {
     setNewTodoInput(e.target.value);
@@ -70,16 +69,12 @@ const App = function() {
       handleCancelUpdate();
       return;
     }
-    dispatch(
-      editTodoActionCreator({ id: selectedTodoId, desc: editTodoInput })
-    );
+    dispatch(editTodoActionCreator({ id: selectedTodoId, desc: editTodoInput }));
     setIsEditMode(false);
     setEditTodoInput("");
   };
 
-  const handleCancelUpdate = (
-    e?: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ): void => {
+  const handleCancelUpdate = (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
     e?.preventDefault();
     setIsEditMode(false);
     setEditTodoInput("");
@@ -90,7 +85,7 @@ const App = function() {
     dispatch(
       toggleTodoActionCreator({
         id: selectedTodoId,
-        isComplete: !selectedTodo.isComplete,
+        isComplete: !selectedTodo.isComplete
       })
     );
   };
@@ -107,11 +102,7 @@ const App = function() {
         <h1>Todo: Redux vs RTK Edition</h1>
         <form onSubmit={handleCreateNewTodo}>
           <label htmlFor="new-todo">Add new:</label>
-          <input
-            onChange={handleNewInputChange}
-            id="new-todo"
-            value={newTodoInput}
-          />
+          <input onChange={handleNewInputChange} id="new-todo" value={newTodoInput} />
           <button type="submit">Create</button>
         </form>
       </div>
@@ -120,9 +111,7 @@ const App = function() {
           <h2>My Todos:</h2>
           {todos.map((todo, i) => (
             <li
-              className={`${todo.isComplete ? "done" : ""} ${
-                todo.id === selectedTodoId ? "active" : ""
-              }`}
+              className={`${todo.isComplete ? "done" : ""} ${todo.id === selectedTodoId ? "active" : ""}`}
               key={todo.id}
               onClick={handleSelectTodo(todo.id)}
             >
@@ -136,13 +125,7 @@ const App = function() {
             <span className="empty-state">No Todo Selected</span>
           ) : !isEditMode ? (
             <>
-              <span
-                className={`todo-desc ${
-                  selectedTodo?.isComplete ? "done" : ""
-                }`}
-              >
-                {selectedTodo.desc}
-              </span>
+              <span className={`todo-desc ${selectedTodo?.isComplete ? "done" : ""}`}>{selectedTodo.desc}</span>
               <div className="todo-actions">
                 <button onClick={handleEdit}>Edit</button>
                 <button onClick={handleToggle}>Toggle</button>
@@ -152,11 +135,7 @@ const App = function() {
           ) : (
             <form onSubmit={handleUpdate}>
               <label htmlFor="edit-todo">Edit:</label>
-              <input
-                ref={editInput}
-                onChange={handleEditInputChange}
-                value={editTodoInput}
-              />
+              <input ref={editInput} onChange={handleEditInputChange} value={editTodoInput} />
               <button type="submit">Update</button>
               <button onClick={handleCancelUpdate}>Cancel</button>
             </form>
