@@ -77,7 +77,8 @@ const selectedTodoSlice = createSlice({
   name: "selectedTodo",
   initialState: null as string | null,
   reducers: {
-    select: (state, { payload }: PayloadAction<{ id: string }>) => payload.id,
+    select: (state, { payload }: PayloadAction<{ id: string | null }>) =>
+      payload.id,
   },
 });
 
