@@ -28,12 +28,19 @@ const todosInitialState: Todo[] = [
   },
 ];
 
+/* Slices are divided based on their different functions.
+ * Here we have three distinct functions.
+- todos
+- select
+- counter
+Thus, we have 3 slices.
+*/
+// createSlice() basically combines createAction() and createReducer()
 const todosSlice = createSlice({
   name: "todos",
-  initialState: todosInitialState,
+  initialState: todosInitialState, // non-primitive value here
   reducers: {
     // Action Creation + Reducer definition done together
-
     create: {
       reducer: (
         state,
@@ -43,6 +50,7 @@ const todosSlice = createSlice({
       ) => {
         state.push(payload);
       },
+      // reducer needs to be pure, just sticking to one operation! But if we create random ID inside reducer, that is an anti-pattern. So we are using `prepare` here.
       prepare: ({ desc }: { desc: string }) => ({
         payload: {
           id: uuid(),
@@ -52,35 +60,64 @@ const todosSlice = createSlice({
       }),
     },
     edit: (state, { payload }: PayloadAction<{ id: string; desc: string }>) => {
-      const index = state.findIndex((todo) => todo.id === payload.id);
-      if (index !== -1) {
-        state[index].desc = payload.desc;
+      const todoToEdit = state.find((todo) => todo.id === payload.id);
+      if (todoToEdit) {
+        todoToEdit.desc = payload.desc;
       }
     },
     toggle: (
       state,
       { payload }: PayloadAction<{ id: string; isComplete: boolean }>
     ) => {
-      const index = state.findIndex((todo) => todo.id === payload.id);
-      if (index !== -1) {
-        state[index].isComplete = payload.isComplete;
+      const todoToToggle = state.find((todo) => todo.id === payload.id);
+      if (todoToToggle) {
+        todoToToggle.isComplete = payload.isComplete;
       }
     },
+
     remove: (state, { payload }: PayloadAction<{ id: string }>) => {
-      const index = state.findIndex((todo) => todo.id === payload.id);
-      if (index !== -1) {
-        state.splice(index, 1);
+      const todoToRemoveIndex = state.findIndex(
+        (todo) => todo.id === payload.id
+      );
+      if (todoToRemoveIndex != -1) {
+        state.splice(todoToRemoveIndex, 1);
       }
     },
+
+    // add: (state, { payload }: PayloadAction<{ desc: string }>) => {
+    //   state.push({
+    //     id: uuid(),
+    //     desc: payload.desc,
+    //     isComplete: false,
+    //   });
+    // },
+
+    // clearCompleted: (state) => {
+    //   state.forEach((todo) => {
+    //     if (todo.isComplete) {
+    //       state.splice(state.indexOf(todo), 1);
+    //     }
+    //   });
+    // }
   },
 });
 
-const selectedTodoSlice = createSlice({
+/*
+store
+    slice
+        reducers
+*/
+
+const selectedTodoslice = createSlice({
   name: "selectedTodo",
-  initialState: null as string | null,
+  initialState: null as string | null, // primitive value here
   reducers: {
     select: (state, { payload }: PayloadAction<{ id: string | null }>) =>
       payload.id,
+    // below will not work with primitive value as state
+    // select: (state, { payload }: PayloadAction<{ id: string }>) => {
+    //   //   state = payload.id;
+    // },
   },
 });
 
@@ -89,14 +126,16 @@ const counterSlice = createSlice({
   initialState: 0,
   reducers: {},
   extraReducers: {
+    // actions from other states
     [todosSlice.actions.create.type]: (state) => state + 1,
     [todosSlice.actions.edit.type]: (state) => state + 1,
-    [todosSlice.actions.toggle.type]: (state) => state + 1,
     [todosSlice.actions.remove.type]: (state) => state + 1,
+    [todosSlice.actions.toggle.type]: (state) => state + 1,
   },
 });
 
-// Action Creator
+// Export action with names to be called from index.tsx
+// index.tsx will use the values inside key-value pairs to access the reducer actions
 export const {
   create: createTodoActionCreator,
   edit: editTodoActionCreator,
@@ -104,20 +143,14 @@ export const {
   remove: deleteTodoActionCreator,
 } = todosSlice.actions;
 
-export const { select: selectTodoActionCreator } = selectedTodoSlice.actions;
+export const { select: selectTodoActionCreator } = selectedTodoslice.actions;
 
 // Combining reducers
 const reducer = {
   todos: todosSlice.reducer,
-  selectedTodo: selectedTodoSlice.reducer,
+  selectedTodo: selectedTodoslice.reducer,
   counter: counterSlice.reducer,
 };
-// Cleaner way is implemented above
-// const reducer = combineReducers({
-//   todos: todosSlice.reducer,
-//   selectedTodo: selectedTodoSlice.reducer,
-//   counter: counterSlice.reducer,
-// });
 
 // getDefaultMiddleware is necessary to tell Redux that we want to use the default middlewares.
 const middleware = [...getDefaultMiddleware(), logger];

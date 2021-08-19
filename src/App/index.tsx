@@ -6,6 +6,7 @@ import React, {
   useState,
 } from "react";
 import { useSelector, useDispatch } from "react-redux";
+
 import {
   createTodoActionCreator,
   editTodoActionCreator,
@@ -13,7 +14,8 @@ import {
   deleteTodoActionCreator,
   selectTodoActionCreator,
   // } from "../redux-og";
-} from "../redux-toolkit";
+  // } from "../redux-toolkit";
+} from "../redux-toolkit-improved";
 
 import { State } from "../type";
 import "./App.css";
@@ -22,6 +24,7 @@ const App = function() {
   const dispatch = useDispatch();
   const todos = useSelector((state: State) => state.todos);
   const selectedTodoId = useSelector((state: State) => state.selectedTodo);
+  // from State interface, use counter
   const editedCount = useSelector((state: State) => state.counter);
 
   const [newTodoInput, setNewTodoInput] = useState<string>("");
@@ -55,7 +58,6 @@ const App = function() {
 
   const handleEdit = (): void => {
     if (!selectedTodo) return;
-
     setEditTodoInput(selectedTodo.desc);
     setIsEditMode(true);
   };
@@ -78,6 +80,7 @@ const App = function() {
     setIsEditMode(false);
   };
 
+  // if user clicks cancel, exit edit mode and empty editTodoInput
   const handleCancelUpdate = (
     e?: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ): void => {

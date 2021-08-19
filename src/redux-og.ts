@@ -13,12 +13,11 @@ const TOGGLE_TODO = "TOGGLE_TODO";
 const DELETE_TODO = "DELETE_TODO";
 const SELECT_TODO = "SELECT_TODO";
 
-// Actions & Action Types
+// Action Type (TS specific) & Action Creator
 interface CreateTodoActionType {
   type: typeof CREATE_TODO;
   payload: Todo;
 }
-
 export const createTodoActionCreator = ({
   desc,
 }: {
