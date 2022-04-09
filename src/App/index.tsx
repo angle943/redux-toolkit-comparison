@@ -127,7 +127,7 @@ const App: React.FC = (): JSX.Element => {
     <div className="App">
       <div className="App__counter">Todos Updated Count: {editedCount}</div>
       <div className="App__header">
-        <h1>OBG</h1>
+        <h1>Todo: Redux VS RTK Edition</h1>
         <form onSubmit={handleCreateNewTodo}>
           <label htmlFor="new-todo">Add new:</label>
           <input
