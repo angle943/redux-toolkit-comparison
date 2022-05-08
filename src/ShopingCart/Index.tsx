@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import IconButton from "@material-ui/core/IconButton";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import LinearProgress from "@material-ui/core/LinearProgress";
 import { Badge, Grid, Drawer } from "@mui/material";
 import Cart from "./Cart/Cart";
@@ -8,6 +8,7 @@ import Cart from "./Cart/Cart";
 import Item from "./Item/Item";
 import { StyledButton, Wrapper } from "./Index.styles";
 import { useQuery } from "react-query";
+import "./Index.css";
 
 export interface CartItemType {
   id: number;
@@ -79,9 +80,9 @@ export default function Index() {
         <Badge
           badgeContent={getTotalItems(cartItems)}
           color="error"
-          style={{ border: "1px solid white", borderRadius: "50%" }}
+          className="shopingCart-cart"
         >
-          <IconButton />
+          <AddShoppingCartIcon />
         </Badge>
       </StyledButton>
       <Grid container spacing={3} style={{ height: "500px" }}>

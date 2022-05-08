@@ -10,7 +10,7 @@ interface Props {
 const Item: React.FC<Props> = ({ item, handleAddToCart }) => {
   return (
     <>
-      <img src={item.image} alt={item.title} height="65%" width="100%" />
+      <img src={item.image} alt={item.title} height="45%" width="100%" />
       <div style={{ color: "white" }}>
         <h3>{item.title}</h3>
         <p>{item.description}</p>
