@@ -9,6 +9,7 @@ import Item from "./Item/Item";
 import { StyledButton, Wrapper } from "./Index.styles";
 import { useQuery } from "react-query";
 import "./Index.css";
+import ItemDetails from "./ItemDetails/ItemDetails";
 
 export interface CartItemType {
   id: number;
@@ -25,6 +26,7 @@ const getProducts = async (): Promise<CartItemType[]> =>
 export default function Index() {
   const [cartOpen, setCartOpen] = useState(false);
   const [cartItems, setCartItems] = useState<CartItemType[]>([]);
+  const [selectedItem, setSelectedItem] = useState<CartItemType>();
 
   const { data, isLoading, error } = useQuery<CartItemType[]>(
     "products",
@@ -63,6 +65,9 @@ export default function Index() {
       }, [] as CartItemType[])
     );
   };
+  const handleShowDetails = (item: CartItemType) => {
+    setSelectedItem(item);
+  };
 
   if (isLoading) return <LinearProgress />;
   if (error) return <div>Something went wrong ...</div>;
@@ -85,13 +90,21 @@ export default function Index() {
           <AddShoppingCartIcon />
         </Badge>
       </StyledButton>
-      <Grid container spacing={3} style={{ height: "500px" }}>
-        {data?.map((item) => (
-          <Grid item key={item.id} xs={12} sm={4}>
-            <Item item={item} handleAddToCart={handleAddToCart} />
-          </Grid>
-        ))}
-      </Grid>
+      {!selectedItem?.id ? (
+        <Grid container spacing={3} style={{ height: "500px" }}>
+          {data?.map((item) => (
+            <Grid item key={item.id} xs={12} sm={4}>
+              <Item
+                item={item}
+                handleAddToCart={handleAddToCart}
+                handleShowDetails={handleShowDetails}
+              />
+            </Grid>
+          ))}
+        </Grid>
+      ) : (
+        <ItemDetails item={selectedItem} handleAddToCart={handleAddToCart} />
+      )}
     </Wrapper>
   );
 }

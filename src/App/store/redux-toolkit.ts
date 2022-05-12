@@ -5,7 +5,6 @@ import {
   PayloadAction,
 } from "@reduxjs/toolkit";
 import { v1 as uuid } from "uuid";
-// import logger from "redux-logger";
 
 import { Todo } from "../../type";
 
@@ -130,8 +129,6 @@ const reducer = combineReducers({
   counter: counterSlice.reducer,
 });
 
-// const middleware = [...getDefaultMiddleware()];
 export default configureStore({
   reducer,
-  //   middleware,
 });
