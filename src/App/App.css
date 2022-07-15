@@ -1,3 +1,6 @@
+.App {
+  color: whitesmoke;
+}
 .App__counter {
   height: 60px;
   display: flex;
@@ -8,7 +11,6 @@
 
 .App__header {
   align-items: center;
-  background: rgb(118, 74, 188);
   color: white;
   display: flex;
   flex-direction: column;
@@ -75,7 +77,6 @@ button:active {
 .App__list {
   list-style-type: none;
   font-size: 17px;
-  color: rgb(28, 30, 33);
   line-height: 25.5px;
   margin-block-start: 0;
   margin-block-end: 0;

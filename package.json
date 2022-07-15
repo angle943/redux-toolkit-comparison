@@ -3,22 +3,35 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@emotion/react": "^11.9.0",
+    "@emotion/styled": "^11.8.1",
+    "@material-ui/core": "^4.12.4",
+    "@mui/icons-material": "^5.6.0",
+    "@mui/lab": "^5.0.0-alpha.76",
+    "@mui/material": "^5.6.0",
+    "@mui/styles": "^5.6.0",
+    "@reduxjs/toolkit": "^1.8.1",
     "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
+    "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.1.2",
     "@types/jest": "^24.0.0",
-    "@types/node": "^12.0.0",
-    "@types/react": "^16.9.0",
-    "@types/react-dom": "^16.9.0",
-    "@types/uuid": "^3.4.7",
-    "eslint-config-prettier": "^6.10.0",
-    "eslint-plugin-prettier": "^3.1.2",
+    "@types/node": "^12.20.47",
+    "@types/react": "^16.14.24",
+    "@types/react-dom": "^16.9.14",
+    "@types/react-redux": "^7.1.23",
+    "@types/uuid": "^3.4.10",
+    "eslint-config-prettier": "^6.15.0",
+    "eslint-plugin-prettier": "^3.4.1",
     "prettier": "^1.19.1",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
+    "react": "^16.14.0",
+    "react-dom": "^16.14.0",
+    "react-query": "^3.34.19",
+    "react-redux": "^7.2.8",
+    "react-router-dom": "^6.3.0",
     "react-scripts": "3.4.0",
-    "typescript": "~3.7.2",
-    "uuid": "^7.0.0"
+    "styled-components": "^5.3.5",
+    "typescript": "^4.6.3",
+    "uuid": "^7.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -40,5 +53,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@types/styled-components": "^5.1.25"
   }
 }
